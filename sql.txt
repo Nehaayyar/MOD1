@@ -1,0 +1,53 @@
+CREATE TABLE consumer (
+	consumer_no number,
+	consumer_name varchar2(20) NOT NULL,
+	email_id varchar2(35),
+	units_consumed number,
+	CONSTRAINT pk_consumer PRIMARY KEY (consumer_no)
+);
+
+
+INSERT INTO CONSUMER VALUES(12322110,'Seema Joshi', 'seema.joshi@gmail.com',250);
+
+INSERT INTO CONSUMER VALUES(17531111,'Amey Joshi', 'amey.j@gmail.com',345);
+
+INSERT INTO CONSUMER VALUES(17533411,'Pravin T', 'pravin.t@gmail.com',457);
+
+INSERT INTO CONSUMER VALUES(12432121,'Manoj Kulkarni', 'manoj.k@gmail.com',780);
+
+INSERT INTO CONSUMER VALUES(12342111,'Shrikant Shinde', 'shrikant.shinde@gmail.com',90);
+
+CREATE TABLE electricity_bill (
+	bill_no number,
+	consumer_no number,
+	bill_amount number,
+	bill_paid_date date,
+	CONSTRAINT pk_electricity_bill PRIMARY KEY (bill_no),
+	CONSTRAINT fk_consumer_bill FOREIGN KEY (consumer_no) REFERENCES consumer(consumer_no)
+);
+
+
+INSERT INTO electricity_bill VALUES(101, 12342111, 300, '10-JAN-2010');
+
+INSERT INTO electricity_bill VALUES(102, 17531111, 650, '10-NOV-2005');
+
+INSERT INTO electricity_bill VALUES(103, 17533411, 870, '19-DEC-2011');
+
+INSERT INTO electricity_bill VALUES(104, 12322110, 530, '23-JUN-2006');
+
+INSERT INTO electricity_bill VALUES(105, 12432121, 1790, '05-FEB-2004');
+
+
+
+1.SELECT consumer_no as "Consumer NO", consumer_name as "Consumer Name" FROM consumer where units_consumed>300;
+2.SELECT MAX(bill_amount) as "Highest Bil Amount Paid" from electricity_bill;
+5.SELECT c.consumer_no as "Consumer NO",
+			consumer_name as "Consumer Name",
+			email_id as "Email Id",
+			bill_no as "Bill No",
+			units_consumed as "Units Consumed",
+			bill_amount as "Bill Amount",
+			bill_paid_date as "Bill Paid Date"
+		FROM consumer c, electricity_bill e 
+		where c.consumer_no = e.consumer_no AND
+				consumer_name = 'Seema Joshi';
